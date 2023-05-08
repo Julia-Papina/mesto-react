@@ -113,36 +113,6 @@ function App() {
 
 
     <PopupWithForm 
-      name="popupAddCard"
-      id="add-card"
-      title="Новое место"
-      buttonText="Создать"
-      isOpen={isAddPlacePopupOpen}
-      onClose={closeAllPopups}
-    >
-      <fieldset className="popup__field">
-       <input 
-          required 
-          type="text"
-          minLength={2}
-          maxLength={40} 
-          className="popup__input popup__input_type_place" 
-          name="name" 
-          placeholder="Название" 
-          id="card-name" />
-         <span className="popup__error card-name-error" />
-      <input  
-          required 
-          type="url"
-          className="popup__input popup__input_type_link" 
-          name="link" 
-          placeholder="Ссылка на картинку" 
-          id="card-link" />
-          <span className="popup__error card-link-error" />
-    </fieldset>
-    </PopupWithForm>
-
-    <PopupWithForm 
       name="popupEditAvatar"
       id="add-avatar"
       title="Обновить аватар"
