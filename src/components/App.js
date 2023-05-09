@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React from "react";
 import '../index.css';
 import Header from './Header';
 import Main from './Main';
@@ -12,6 +12,8 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
+
+  const [selectedCard, setSelectedCard] = React.useState({})
 
 
   function handleEditProfileClick() {
@@ -31,6 +33,7 @@ function App() {
     setIsEditProfilePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
     setIsAddPlacePopupOpen(false);
+    setSelectedCard({})
 
 
    }
@@ -44,7 +47,8 @@ function App() {
       <Main
         onEditProfile={handleEditProfileClick}
         onEditAvatar={handleEditAvatarClick}
-        onAddPlace={handleAddPlaceClick}       
+        onAddPlace={handleAddPlaceClick}   
+        onCardClick={setSelectedCard}    
       />
 
     <PopupWithForm 
@@ -133,22 +137,7 @@ function App() {
          <span className="popup__error edit-avatar-error" />
     </fieldset>
     </PopupWithForm>
-    
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-    
+    <ImagePopup card={selectedCard} onClose={closeAllPopups} />
     </div>
       <Footer />
   </div>
