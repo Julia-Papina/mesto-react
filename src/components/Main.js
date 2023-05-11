@@ -5,15 +5,16 @@ import Card from "./Card"
 
 function Main({onEditProfile, onEditAvatar, onAddPlace, onCardClick}) {
 
-  const [userName, setUserName] = useState("")
+  const [userName, setUserName] = useState("") //переменные состояния
   const [userDescription, setuserDescription] = useState("")
   const [userAvatar, setUserAvatar] = useState("")
-  const [cards, getInitialCards] = useState([])
+  const [cards, getInitialCards] = useState([]) //переменная cards с пустым массивом по умолчанию
 
+  //эффект при монтировании компонента, совершает апи запрос за польз-ми данными
   useEffect(() => {
     api.getProfile()
     .then((profileUserInfo) => {
-      setUserName(profileUserInfo.name)
+      setUserName(profileUserInfo.name) //задали полученные данные в соответ-щие переменные состояния
       setuserDescription(profileUserInfo.about)
       setUserAvatar(profileUserInfo.avatar)
     })

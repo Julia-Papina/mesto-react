@@ -1,6 +1,8 @@
 import React from "react"
 
 function Card(card) {
+  //обработчик для selectedCard. пробрасываем в компонент Card сквозь компонент Main -
+  // в виде пропса onCardClick с нужными значениями данных карточек
     function handleCardClick() {
         card.onCardClick(card)
     }

@@ -9,15 +9,15 @@ import ImagePopup from "./ImagePopup";
 
 function App() {
 
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false); //переменные состояния
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
 
-  const [selectedCard, setSelectedCard] = React.useState({})
+  const [selectedCard, setSelectedCard] = React.useState({}) //стейт переменная для отображения большой картинки
 
 
-  function handleEditProfileClick() {
-     setIsEditProfilePopupOpen(true);
+  function handleEditProfileClick() {  //обработчики переменных состояния
+     setIsEditProfilePopupOpen(true); //поменяли состояние
   }
 
    function handleEditAvatarClick() {
@@ -29,6 +29,7 @@ function App() {
 
    }
 
+   //обработчик пропса onClose компонента PopupWithForm 
    function closeAllPopups() {
     setIsEditProfilePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
@@ -45,7 +46,7 @@ function App() {
     <div className="page">
       <Header />
       <Main
-        onEditProfile={handleEditProfileClick}
+        onEditProfile={handleEditProfileClick} //пропсы Main
         onEditAvatar={handleEditAvatarClick}
         onAddPlace={handleAddPlaceClick}   
         onCardClick={setSelectedCard}    
@@ -56,8 +57,8 @@ function App() {
       id="edit-profile"
       title="Редактировать профиль"
       buttonText="Сохранить"
-      isOpen={isEditProfilePopupOpen}
-      onClose={closeAllPopups}
+      isOpen={isEditProfilePopupOpen} //задаем значение isOpen с помощью переменной состояния
+      onClose={closeAllPopups}  
     >
       <fieldset className="popup__field">
        <input 
