@@ -15,9 +15,10 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
 
-  const [selectedCard, setSelectedCard] = React.useState({}) //стейт переменная для отображения большой картинки
+  const [selectedCard, setSelectedCard] = React.useState({}); //стейт переменная для отображения большой картинки
   const [currentUser, setCurrentUser] = React.useState({}); 
-  const [cards, setCards] = React.useState([])
+  const [cards, setCards] = React.useState([]);
+ 
 
   React.useEffect(() => {
     api.getProfile()
@@ -87,6 +88,15 @@ function App() {
       .catch((error) => console.log(`Ошибка: ${error}`))
    }
   }
+
+  function handleCardDelete(card) {
+    api.deleteCard(card._id)
+    .then(() => {
+    setCards((state) => state.filter((item) => item._id !== card._id))
+    closeAllPopups()  
+  })
+  .catch((error) => console.log(`Ошибка: ${error}`))
+  }
     
 
   return (
@@ -101,6 +111,7 @@ function App() {
         onAddPlace={handleAddPlaceClick}   
         onCardClick={setSelectedCard}
         onCardLike={handleCardLike}
+        onCardDelete={handleCardDelete}
         cards={cards}    
       />
 

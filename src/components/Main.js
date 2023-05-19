@@ -8,7 +8,8 @@ function Main({cards,
                onEditAvatar, 
                onAddPlace, 
                onCardClick,
-               onCardLike}) {
+               onCardLike,
+              onCardDelete}) {
   
                 
   const currentUser = React.useContext(CurrentUserContext)
@@ -38,6 +39,7 @@ function Main({cards,
             key={card._id}
             onCardLike={onCardLike}
             onCardClick={onCardClick}
+            onCardDelete={onCardDelete}
             />
           ))}
         </section>

@@ -2,7 +2,7 @@ import React from "react";
 import { useContext } from "react";
 import CurrentUserContext from "../contexts/CurrentUserContext";
 
-function Card({card, onCardLike, onCardClick}) {
+function Card({card, onCardLike, onCardClick, onCardDelete}) {
   
 
     const currentUser = useContext(CurrentUserContext);
@@ -26,6 +26,10 @@ function Card({card, onCardLike, onCardClick}) {
     onCardLike(card)
    }
 
+   function handleDeleteClick() {
+    onCardDelete(card)
+   }
+
 
 return (
     
@@ -36,6 +40,7 @@ return (
            onClick={handleCardClick} />
       {isOwner && (
       <button className="button cards__delete-button" 
+              onClick={handleDeleteClick}
               type="button" 
               aria-label="Удалить пост">
       </button>)}
