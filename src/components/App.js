@@ -7,7 +7,8 @@ import Footer from './Footer'
 import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 import CurrentUserContext from "../contexts/CurrentUserContext";
-import api from '../utils/Api'
+import api from '../utils/Api';
+import EditProfilePopup from './EditProfilePopup';
 
 function App() {
 
@@ -97,6 +98,15 @@ function App() {
   })
   .catch((error) => console.log(`Ошибка: ${error}`))
   }
+
+  function handleUpdateUser(newUserInfo) {
+    api.editProfile(newUserInfo)
+    .then((data) => {
+      setCurrentUser(data)
+      closeAllPopups()
+    })
+    .catch((error) => console.log(`Ошибка: ${error}`))
+  }
     
 
   return (
@@ -115,39 +125,9 @@ function App() {
         cards={cards}    
       />
 
-    <PopupWithForm 
-      name="popupEditProfile"
-      id="edit-profile"
-      title="Редактировать профиль"
-      buttonText="Сохранить"
-      isOpen={isEditProfilePopupOpen} //задаем значение isOpen с помощью переменной состояния
-      onClose={closeAllPopups}  
-    >
-      <fieldset className="popup__field">
-       <input 
-          required 
-          type="text"
-          minLength={2}
-          maxLength={40} 
-          className="popup__input popup__input_type_name" 
-          name="name" 
-          placeholder="Имя" 
-          id="user-name" />
-         <span className="popup__error user-name-error" />
-       <input 
-        type="text"
-         minLength={2} 
-         maxLength={200} 
-         className="popup__input popup__input_type_job"
-         name="job" 
-         required 
-         placeholder="О вас" 
-         id="user-job" />
-        <span className="popup__error user-job-error" />
-    </fieldset>
-
-    </PopupWithForm>
-
+    <EditProfilePopup isOpen={isEditProfilePopupOpen} 
+                      onClose={closeAllPopups}
+                      onUpdateUser={handleUpdateUser} /> 
     <PopupWithForm 
       name="popupAddCard"
       id="add-card"
