@@ -75,12 +75,12 @@ import React from "react";
       .then(this._checkResponse);
   }
 
-  changeUserAvatar(avatar){
+  changeUserAvatar(data){
     return fetch(`${this._baseUrl}/users/me/avatar`, {
         method:"PATCH",
         headers: this._headers,
         body: JSON.stringify({
-            avatar
+            avatar:  data.avatar,
           }),
       })
       .then(this._checkResponse); 

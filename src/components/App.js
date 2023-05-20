@@ -9,6 +9,7 @@ import ImagePopup from "./ImagePopup";
 import CurrentUserContext from "../contexts/CurrentUserContext";
 import api from '../utils/Api';
 import EditProfilePopup from './EditProfilePopup';
+import EditAvatarPopup from "./EditAvatarPopup";
 
 function App() {
 
@@ -107,6 +108,17 @@ function App() {
     })
     .catch((error) => console.log(`Ошибка: ${error}`))
   }
+
+  function handleUpdateAvatar(newAvatar) {
+    api.changeUserAvatar(newAvatar)
+      .then((data) => {
+        setCurrentUser(data)
+        closeAllPopups()
+      })
+      .catch((error) => console.log(`Ошибка: ${error}`))
+      
+  }
+
     
 
   return (
@@ -128,6 +140,10 @@ function App() {
     <EditProfilePopup isOpen={isEditProfilePopupOpen} 
                       onClose={closeAllPopups}
                       onUpdateUser={handleUpdateUser} /> 
+
+    <EditAvatarPopup isOpen={isEditAvatarPopupOpen} 
+                     onClose={closeAllPopups}
+                     onUpdateAvatar={handleUpdateAvatar} /> 
     <PopupWithForm 
       name="popupAddCard"
       id="add-card"
@@ -160,27 +176,7 @@ function App() {
     </PopupWithForm>
 
 
-    <PopupWithForm 
-      name="popupEditAvatar"
-      id="add-avatar"
-      title="Обновить аватар"
-      buttonText="Сохранить"
-      isOpen={isEditAvatarPopupOpen}
-      onClose={closeAllPopups}
-    >
-      <fieldset className="popup__field">
-       <input 
-          required 
-          type="url"
-          minLength={2}
-          maxLength={40} 
-          className="popup__input popup__input_type_avatar" 
-          name="avatar" 
-          placeholder="Ссылка на аватар" 
-          id="edit-avatar" />
-         <span className="popup__error edit-avatar-error" />
-    </fieldset>
-    </PopupWithForm>
+   
     <ImagePopup card={selectedCard} onClose={closeAllPopups} />
     </div>
       <Footer />
