@@ -2,7 +2,6 @@ import React from "react";
 import PopupWithForm from "./PopupWithForm";
 
 function EditAvatarPopup({  onClose, onUpdateAvatar, isOpen }) {
-
     const avatarRef = React.useRef(null)
 
   React.useEffect(() => {
@@ -19,8 +18,6 @@ function EditAvatarPopup({  onClose, onUpdateAvatar, isOpen }) {
   function handleChangeAvatar() {
    return avatarRef.current.value
   }
-
-
 
 return (
     <PopupWithForm 

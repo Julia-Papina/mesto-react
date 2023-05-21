@@ -3,8 +3,6 @@ import { useContext } from "react";
 import CurrentUserContext from "../contexts/CurrentUserContext";
 
 function Card({card, onCardLike, onCardClick, onCardDelete}) {
-  
-
     const currentUser = useContext(CurrentUserContext);
     // Определяем, являемся ли мы владельцем текущей карточки
     const isOwner = card.owner._id === currentUser._id;
@@ -30,9 +28,7 @@ function Card({card, onCardLike, onCardClick, onCardDelete}) {
     onCardDelete(card)
    }
 
-
-return (
-    
+return ( 
     <div className="cards__item">
       <img src={card.link} 
            alt={card.name} 
@@ -53,9 +49,6 @@ return (
        
       </div> 
     </div>
- 
-
-
 )
 }
 export default Card

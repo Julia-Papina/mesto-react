@@ -4,12 +4,12 @@ import '../index.css';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer'
-import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 import CurrentUserContext from "../contexts/CurrentUserContext";
-import api from '../utils/Api';
+import api from '../utils/api';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from "./EditAvatarPopup";
+import AddPlacePopup from "./AddPlacePopup";
 
 function App() {
 
@@ -29,7 +29,7 @@ function App() {
 
     api.getInitialCards()
     .then((data) => {
-      setCards(
+       setCards(
         data.map((card) => ({
           _id: card._id,
           name: card.name,
@@ -41,9 +41,6 @@ function App() {
     })
     .catch((error) => console.log(`Ошибка: ${error}`))
   }, [])
-
-  
-
 
   function handleEditProfileClick() {  //обработчики переменных состояния
      setIsEditProfilePopupOpen(true); //поменяли состояние
@@ -64,7 +61,6 @@ function App() {
     setIsEditAvatarPopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setSelectedCard({})
-
 
    }
 
@@ -116,11 +112,17 @@ function App() {
         closeAllPopups()
       })
       .catch((error) => console.log(`Ошибка: ${error}`))
-      
-  }
+      }
 
+  function handleAddPlaceSubmit(data) {
+      api.addCard(data)
+          .then((newCard) => {
+            setCards([newCard, ...cards])
+            closeAllPopups()
+          })
+          .catch((error) => console.log(`Ошибка: ${error}`))
+      }
     
-
   return (
   <CurrentUserContext.Provider value={currentUser}>
   <div className="root">
@@ -136,52 +138,22 @@ function App() {
         onCardDelete={handleCardDelete}
         cards={cards}    
       />
-
-    <EditProfilePopup isOpen={isEditProfilePopupOpen} 
+      <EditProfilePopup isOpen={isEditProfilePopupOpen} 
                       onClose={closeAllPopups}
                       onUpdateUser={handleUpdateUser} /> 
 
-    <EditAvatarPopup isOpen={isEditAvatarPopupOpen} 
+      <EditAvatarPopup isOpen={isEditAvatarPopupOpen} 
                      onClose={closeAllPopups}
                      onUpdateAvatar={handleUpdateAvatar} /> 
-    <PopupWithForm 
-      name="popupAddCard"
-      id="add-card"
-      title="Новое место"
-      buttonText="Создать"
-      isOpen={isAddPlacePopupOpen}
-      onClose={closeAllPopups}
-    >
-      <fieldset className="popup__field">
-       <input 
-          required 
-          type="text"
-          minLength={2}
-          maxLength={40} 
-          className="popup__input popup__input_type_place" 
-          name="name" 
-          placeholder="Название" 
-          id="card-name" />
-         <span className="popup__error card-name-error" />
-      <input  
-          required 
-          type="url"
-          className="popup__input popup__input_type_link" 
-          name="link" 
-          placeholder="Ссылка на картинку" 
-          id="card-link" />
-          <span className="popup__error card-link-error" />
-    </fieldset>
-
-    </PopupWithForm>
-
-
+      <AddPlacePopup onAddPlace={handleAddPlaceSubmit}
+                   isOpen={isAddPlacePopupOpen}
+                   onClose={closeAllPopups} />                
    
-    <ImagePopup card={selectedCard} onClose={closeAllPopups} />
-    </div>
-      <Footer />
-  </div>
-  </CurrentUserContext.Provider>
+      <ImagePopup card={selectedCard} onClose={closeAllPopups} />
+        </div>
+         <Footer />
+       </div>
+    </CurrentUserContext.Provider>
 
   );
 }
