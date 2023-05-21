@@ -19,7 +19,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
-  "homepage": "https://github.com/Julia-Papina/mesto-react",
+  "homepage": "https://julia-papina.github.io/mesto-react/",
   "eslintConfig": {
     "extends": [
       "react-app",
