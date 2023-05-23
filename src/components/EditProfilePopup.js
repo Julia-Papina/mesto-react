@@ -4,7 +4,7 @@ import PopupWithForm from "./PopupWithForm";
 
 function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
   // Подписка на контекст
-  const currentUser = React.useContext(CurrentUserContext);
+  const currentUser = React.useContext(CurrentUserContext); //Чтобы подставить в форму текущие значения, подписалась на контекст.
   const [name, setName] = React.useState("")
   const [about, setAbout] = React.useState("")
 
@@ -15,6 +15,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
     setAbout(currentUser.about);
   }, [currentUser, isOpen]); 
 
+  //обработчик сабмита
 function handleSubmit(e) {
     // Запрещаем браузеру переходить по адресу формы
     e.preventDefault();

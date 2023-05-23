@@ -2,7 +2,8 @@ import React from "react";
 import { useContext } from "react";
 import CurrentUserContext from "../contexts/CurrentUserContext";
 
-function Card({card, onCardLike, onCardClick, onCardDelete}) {
+function Card({card, onCardLike, onCardClick, onCardDelete, onDeleteConfirmPopup}) {
+
     const currentUser = useContext(CurrentUserContext);
     // Определяем, являемся ли мы владельцем текущей карточки
     const isOwner = card.owner._id === currentUser._id;
@@ -14,18 +15,18 @@ function Card({card, onCardLike, onCardClick, onCardDelete}) {
     `button cards__like ${isLiked ? 'cards__like_active' : ""}` 
      );
 
-     //обработчик для selectedCard. пробрасываем в компонент Card сквозь компонент Main -
-    // в виде пропса onCardClick с нужными значениями данных карточек
+     //обработчик для selectedCard (большой картинки)
     function handleCardClick() {
      onCardClick(card)
    }
-
+    // обработчик клика на лайк
    function handleLikeClick() {
     onCardLike(card)
    }
-
+    // обработчик клика на удаление
    function handleDeleteClick() {
     onCardDelete(card)
+    onDeleteConfirmPopup(true)
    }
 
 return ( 

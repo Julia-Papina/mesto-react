@@ -9,7 +9,8 @@ function Main({cards,
                onAddPlace, 
                onCardClick,
                onCardLike,
-              onCardDelete}) {
+              onDeletedCard,
+              onDeleteConfirmPopup}) {
                 
   const currentUser = React.useContext(CurrentUserContext)
 
@@ -37,7 +38,8 @@ function Main({cards,
             key={card._id}
             onCardLike={onCardLike}
             onCardClick={onCardClick}
-            onCardDelete={onCardDelete}
+            onCardDelete={onDeletedCard}
+            onDeleteConfirmPopup={onDeleteConfirmPopup}
             />
           ))}
         </section>

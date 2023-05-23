@@ -10,13 +10,15 @@ import api from '../utils/Api';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
+import DeleteConfirmPopup from "./DeleteConfirmPopup";
 
 function App() {
 
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false); //переменные состояния
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
-
+  const [isDeleteConfirmPopupOpen, setIsDeleteConfirmPopupOpen] = React.useState(false);
+  const [deletedCard, setDeletedCard] = React.useState({});
   const [selectedCard, setSelectedCard] = React.useState({}); //стейт переменная для отображения большой картинки
   const [currentUser, setCurrentUser] = React.useState({}); 
   const [cards, setCards] = React.useState([]);
@@ -60,12 +62,15 @@ function App() {
     setIsEditProfilePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
     setIsAddPlacePopupOpen(false);
+    setIsDeleteConfirmPopupOpen(false);
+    setDeletedCard({})
     setSelectedCard({})
 
    }
 
+    // Функция при клике на лайк
    function handleCardLike(card) {
-    // Снова проверяем, есть ли уже лайк на этой карточке
+    // проверяем, есть ли уже лайк на этой карточке
     const isLiked = card.likes.some(i => i._id === currentUser._id)
 
     if (isLiked) {
@@ -86,16 +91,16 @@ function App() {
       .catch((error) => console.log(`Ошибка: ${error}`))
    }
   }
-
+   //Функция удаления карточки
   function handleCardDelete(card) {
     api.deleteCard(card._id)
     .then(() => {
-    setCards((state) => state.filter((item) => item._id !== card._id))
+    setCards((state) => state.filter((item) => item._id !== card._id)) //методом filter: создала копию массива, исключив из него удалённую карточку. 
     closeAllPopups()  
   })
   .catch((error) => console.log(`Ошибка: ${error}`))
   }
-
+  //обработчик обновления данных пользователя
   function handleUpdateUser(newUserInfo) {
     api.editProfile(newUserInfo)
     .then((data) => {
@@ -104,7 +109,7 @@ function App() {
     })
     .catch((error) => console.log(`Ошибка: ${error}`))
   }
-
+   //обновление аватара
   function handleUpdateAvatar(newAvatar) {
     api.changeUserAvatar(newAvatar)
       .then((data) => {
@@ -113,11 +118,11 @@ function App() {
       })
       .catch((error) => console.log(`Ошибка: ${error}`))
       }
-
+  //обработчик добавления новой карточки
   function handleAddPlaceSubmit(data) {
       api.addCard(data)
           .then((newCard) => {
-            setCards([newCard, ...cards])
+            setCards([newCard, ...cards]) //обновила стейт cards с помощью расширенной копии текущего массива 
             closeAllPopups()
           })
           .catch((error) => console.log(`Ошибка: ${error}`))
@@ -132,10 +137,12 @@ function App() {
       <Main
         onEditProfile={handleEditProfileClick} //пропсы Main
         onEditAvatar={handleEditAvatarClick}
-        onAddPlace={handleAddPlaceClick}   
+        onAddPlace={handleAddPlaceClick}
+        onDeleteConfirmPopup={setIsDeleteConfirmPopupOpen}
+        onDeletedCard={setDeletedCard}   
         onCardClick={setSelectedCard}
         onCardLike={handleCardLike}
-        onCardDelete={handleCardDelete}
+        
         cards={cards}    
       />
       <EditProfilePopup isOpen={isEditProfilePopupOpen} 
@@ -147,7 +154,12 @@ function App() {
                      onUpdateAvatar={handleUpdateAvatar} /> 
       <AddPlacePopup onAddPlace={handleAddPlaceSubmit}
                    isOpen={isAddPlacePopupOpen}
-                   onClose={closeAllPopups} />                
+                   onClose={closeAllPopups} />  
+      <DeleteConfirmPopup 
+                      onClose={closeAllPopups}
+                      isOpen={isDeleteConfirmPopupOpen}
+                      onCardDelete={handleCardDelete}
+                      card={deletedCard}/>              
    
       <ImagePopup card={selectedCard} onClose={closeAllPopups} />
         </div>

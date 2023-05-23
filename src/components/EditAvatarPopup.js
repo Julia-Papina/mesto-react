@@ -11,7 +11,7 @@ function EditAvatarPopup({  onClose, onUpdateAvatar, isOpen }) {
   function handleSubmit(e) {
     e.preventDefault()
     onUpdateAvatar({
-      avatar: avatarRef.current.value,
+      avatar: avatarRef.current.value, //значение инпута, полученное с помощью рефа
     })
   }
 
